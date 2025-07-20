@@ -1,25 +1,45 @@
 import { useState } from "react";
-import Input from "./Input"
+import Input from "./Input";
 
-function AddTask({OnAddTaskClick}) {
+function AddTask({ OnAddTaskClick }) {
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
-  const[title,setTitle] = useState("");
-  const[desc,setDesc] = useState("");
+  const handleSubmit = () => {
+    if (!title.trim() || !desc.trim()) {
+      return alert("Precisa inserir os dois campos!");
+    }
+    OnAddTaskClick(title, desc);
+    setTitle("");
+    setDesc("");
+  };
 
-  return(
+  return (
     <div className="bg-zinc-700 p-5 rounded-md shadow-md space-y-4">
-        <Input value={title} onChange={(event) => setTitle(event.target.value)} type="text" name="" id="" placeholder="Titulo da tarefa"/>
-        <Input value={desc} onChange={(event) => setDesc(event.target.value)} type="text"placeholder="Descricao da tarefa"/>
-        <button className="w-full bg-zinc-800 text-white p-3 rounded-md cursor-pointer font-medium" onClick={() => {
-          if(!title.trim() || !desc.trim()){
-            return alert("Precisa inserir os dois campos!");
-          }
-          OnAddTaskClick(title,desc);
-          setTitle("");
-          setDesc("");
-        } }>Adicionar</button>
+      <Input
+        value={title}
+        onChange={(event) => setTitle(event.target.value)}
+        onKeyDown={(event) => (event.key === "Enter" ? handleSubmit() : null)}
+        type="text"
+        name=""
+        id=""
+        placeholder="Titulo da tarefa"
+      />
+      <Input
+        value={desc}
+        onChange={(event) => setDesc(event.target.value)}
+        onKeyDown={(event) => (event.key === "Enter" ? handleSubmit() : null)}
+        type="text"
+        placeholder="Descricao da tarefa"
+      />
+      <button
+        className="w-full bg-zinc-800 text-white p-3 rounded-md cursor-pointer font-medium"
+        onClick={handleSubmit}
+      >
+        Adicionar
+      </button>
     </div>
-  )
+  );
 }
 
 export default AddTask;

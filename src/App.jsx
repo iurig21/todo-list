@@ -7,7 +7,9 @@ import Title from "./components/Title";
 
 function App() {
   const storedTasks = localStorage.getItem("tasks");
-  const [tasks, setTasks] = useState(storedTasks ? JSON.parse(storedTasks) : [] );
+  const [tasks, setTasks] = useState(
+    storedTasks ? JSON.parse(storedTasks) : []
+  );
 
   useEffect(
     () => localStorage.setItem("tasks", JSON.stringify(tasks)),
@@ -23,7 +25,7 @@ function App() {
         }
       );
       const responseJSON = await response.json();
-      setTasks(JSON.parse(responseJSON));
+      setTasks(responseJSON);
     }
     // Apidata(); //Tarefas podem vir de uma API, se quiser
   }, []); // Lista vazia para que a função so seja executada na 1a vez que o usuario entrar na aplicação
