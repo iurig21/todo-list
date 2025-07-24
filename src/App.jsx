@@ -72,6 +72,10 @@ const[taskData,setTaskData] = useState({});
   function SaveEdits(newTitle,newDesc){
     const newTasks = tasks.map((t) => t.id === taskData.id ? {... t , title : newTitle , description : newDesc} : t );
     setTasks(newTasks);
+    CloseEditTaskModal();
+  }
+
+  const CloseEditTaskModal = () => {
     setEdit(false);
   }
   
@@ -80,7 +84,7 @@ const[taskData,setTaskData] = useState({});
       <div className="w-[500px] space-y-5">
         <Title>Gerenciador de tarefas</Title>
         <AddTask OnAddTaskClick={OnAddTaskClick} />
-        {edit && <EditTask taskData={taskData} SaveEdits={SaveEdits}/>}
+        {edit && <EditTask taskData={taskData} SaveEdits={SaveEdits} CloseEditTaskModal={CloseEditTaskModal}/>}
         {tasks.length > 0 && (
           <Tasks
             tasks={tasks}
