@@ -4,6 +4,7 @@ import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
 import { v4 } from "uuid";
 import Title from "./components/Title";
+import EditTask from "./components/EditTask";
 
 function App() {
   const storedTasks = localStorage.getItem("tasks");
@@ -11,11 +12,16 @@ function App() {
     storedTasks ? JSON.parse(storedTasks) : []
   );
 
+  
+const [edit,setEdit] = useState(false);
+const[taskData,setTaskData] = useState({});
+
   useEffect(
     () => localStorage.setItem("tasks", JSON.stringify(tasks)),
     [tasks]
   );
 
+  /*
   useEffect(() => {
     async function Apidata() {
       const response = await fetch(
@@ -27,9 +33,9 @@ function App() {
       const responseJSON = await response.json();
       setTasks(responseJSON);
     }
-    // Apidata(); //Tarefas podem vir de uma API, se quiser
+     Apidata(); //Tarefas podem vir de uma API, se quiser
   }, []); // Lista vazia para que a função so seja executada na 1a vez que o usuario entrar na aplicação
-
+  */
   function OnAddTaskClick(title, desc) {
     const newTask = {
       id: v4(),
@@ -53,16 +59,36 @@ function App() {
     setTasks(newTasks);
   }
 
+  function OnEditTaskClick(task){
+    setEdit(true);
+    setTaskData({
+      id: task.id,
+      title: task.title,
+      description: task.description
+    });
+  }
+
+
+  function SaveEdits(newTitle,newDesc){
+    const newTasks = tasks.map((t) => t.id === taskData.id ? {... t , title : newTitle , description : newDesc} : t );
+    setTasks(newTasks);
+    setEdit(false);
+  }
+  
   return (
     <div className="h-screen w-screen bg-zinc-800 flex justify-center p-6">
       <div className="w-[500px] space-y-5">
         <Title>Gerenciador de tarefas</Title>
         <AddTask OnAddTaskClick={OnAddTaskClick} />
-        <Tasks
-          tasks={tasks}
-          OnTaskClick={OnTaskClick}
-          OnDeleteTask={OnDeleteTask}
-        />
+        {edit && <EditTask taskData={taskData} SaveEdits={SaveEdits}/>}
+        {tasks.length > 0 && (
+          <Tasks
+            tasks={tasks}
+            OnTaskClick={OnTaskClick}
+            OnDeleteTask={OnDeleteTask}
+            OnEditTaskClick={OnEditTaskClick}
+          />
+        )}
       </div>
     </div>
   );

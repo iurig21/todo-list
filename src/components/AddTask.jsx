@@ -6,8 +6,8 @@ function AddTask({ OnAddTaskClick }) {
   const [desc, setDesc] = useState("");
 
   const handleSubmit = () => {
-    if (!title.trim() || !desc.trim()) {
-      return alert("Precisa inserir os dois campos!");
+    if (!title.trim()) {
+      return alert("O titulo é obrigatório!");
     }
     OnAddTaskClick(title, desc);
     setTitle("");
@@ -30,7 +30,7 @@ function AddTask({ OnAddTaskClick }) {
         onChange={(event) => setDesc(event.target.value)}
         onKeyDown={(event) => (event.key === "Enter" ? handleSubmit() : null)}
         type="text"
-        placeholder="Descricao da tarefa"
+        placeholder="Descricao da tarefa (opcional)"
       />
       <button
         className="w-full bg-zinc-800 text-white p-3 rounded-md cursor-pointer font-medium"
