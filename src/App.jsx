@@ -81,7 +81,7 @@ const[taskData,setTaskData] = useState({});
   
   return (
     <div className="h-screen w-screen bg-zinc-800 flex justify-center p-6">
-      <div className="w-[500px] space-y-5">
+      <main className="w-[500px] space-y-7">
         <Title>Gerenciador de tarefas</Title>
         <AddTask OnAddTaskClick={OnAddTaskClick} />
         {edit && <EditTask taskData={taskData} SaveEdits={SaveEdits} CloseEditTaskModal={CloseEditTaskModal}/>}
@@ -93,7 +93,7 @@ const[taskData,setTaskData] = useState({});
             OnEditTaskClick={OnEditTaskClick}
           />
         )}
-      </div>
+      </main>
     </div>
   );
 }
