@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import "./App.css";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
 import { v4 } from "uuid";
 import Title from "./components/Title";
 import EditTask from "./components/EditTask";
+import DeleteTask from "./components/DeleteTask";
 
 function App() {
   const storedTasks = localStorage.getItem("tasks");
@@ -12,8 +13,10 @@ function App() {
     storedTasks ? JSON.parse(storedTasks) : []
   );
 
-  
+const [showDeleteTaskModal,setShowDeleteTaskModal] = useState(false);
+console.log(showDeleteTaskModal);
 const [edit,setEdit] = useState(false);
+const[taskId,setTaskid] = useState();
 const[taskData,setTaskData] = useState({});
 
   useEffect(
@@ -53,11 +56,23 @@ const[taskData,setTaskData] = useState({});
     );
     setTasks(newTasks);
   }
+  
 
-  function OnDeleteTask(taskID) {
-    const newTasks = tasks.filter((task) => taskID != task.id);
-    setTasks(newTasks);
+  function OnDeleteTaskClick(taskID) {
+    setShowDeleteTaskModal(true);
+    setTaskid(taskID);
   }
+
+  function HandleDeleteTask(taskID){
+      const newTasks = tasks.filter((task) => taskID != task.id);
+      setTasks(newTasks);
+      CloseDeleteTaskModal();
+  }
+
+  function CloseDeleteTaskModal(){
+    setShowDeleteTaskModal(false);
+  }
+
 
   function OnEditTaskClick(task){
     setEdit(true);
@@ -85,11 +100,12 @@ const[taskData,setTaskData] = useState({});
         <Title>Gerenciador de tarefas</Title>
         <AddTask OnAddTaskClick={OnAddTaskClick} />
         {edit && <EditTask taskData={taskData} SaveEdits={SaveEdits} CloseEditTaskModal={CloseEditTaskModal}/>}
+        {showDeleteTaskModal && <DeleteTask  CloseDeleteTaskModal={CloseDeleteTaskModal} HandleDeleteTask={HandleDeleteTask} taskId={taskId} />}
         {tasks.length > 0 && (
           <Tasks
             tasks={tasks}
             OnTaskClick={OnTaskClick}
-            OnDeleteTask={OnDeleteTask}
+            OnDeleteTaskClick={OnDeleteTaskClick}
             OnEditTaskClick={OnEditTaskClick}
           />
         )}

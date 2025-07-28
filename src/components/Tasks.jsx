@@ -4,7 +4,7 @@ import Button from "./Button";
 import SearchBar  from "./SearchBar";
 import {useEffect, useState} from "react";
 
-function Tasks({tasks,OnTaskClick,OnDeleteTask,OnEditTaskClick}) {
+function Tasks({tasks,OnTaskClick,OnDeleteTaskClick,OnEditTaskClick}) {
 
 
 const [SearchedTasks,setSearchedTasks] = useState(tasks);
@@ -33,7 +33,7 @@ useEffect(() => setSearchedTasks(tasks),[tasks]);
           <button className={` cursor-pointer text-white bg-zinc-800 rounded-md p-2 w-full flex gap-2 text-start ${task.completed && 'line-through'}`} onClick={() => OnTaskClick(task.id)}> {task.completed && <CheckIcon/>} {task.title} </button>
           <Button onClick={() => OnSeeDetailsClick(task)}> <ChevronRightIcon/> </Button>
           <Button onClick={() => OnEditTaskClick(task)}> <Pencil/> </Button>
-          <Button onClick={() => OnDeleteTask(task.id)}> <Trash/> </Button>
+          <Button onClick={() => OnDeleteTaskClick(task.id)}> <Trash/> </Button>
         </li>
       ))}
     </ul>
