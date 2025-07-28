@@ -14,7 +14,6 @@ function App() {
   );
 
 const [showDeleteTaskModal,setShowDeleteTaskModal] = useState(false);
-console.log(showDeleteTaskModal);
 const [edit,setEdit] = useState(false);
 const[taskId,setTaskid] = useState();
 const[taskData,setTaskData] = useState({});

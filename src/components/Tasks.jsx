@@ -30,7 +30,7 @@ useEffect(() => setSearchedTasks(tasks),[tasks]);
       <SearchBar OnSerchBarChange={OnSerchBarChange}/>
       {SearchedTasks.map((task,idx) => (
         <li key={idx} className="flex gap-2">
-          <button className={` cursor-pointer text-white bg-zinc-800 rounded-md p-2 w-full flex gap-2 text-start ${task.completed && 'line-through'}`} onClick={() => OnTaskClick(task.id)}> {task.completed && <CheckIcon/>} {task.title} </button>
+          <button className={`cursor-pointer  bg-zinc-800 rounded-md p-2 w-full flex gap-2 text-start ${task.completed ? 'line-through text-red-600' : 'text-white'}`} onClick={() => OnTaskClick(task.id)}> {task.completed && <CheckIcon/>} {task.title} </button>
           <Button onClick={() => OnSeeDetailsClick(task)}> <ChevronRightIcon/> </Button>
           <Button onClick={() => OnEditTaskClick(task)}> <Pencil/> </Button>
           <Button onClick={() => OnDeleteTaskClick(task.id)}> <Trash/> </Button>
